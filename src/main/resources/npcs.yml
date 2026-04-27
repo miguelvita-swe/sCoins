@@ -1,0 +1,76 @@
+# ================================================
+#   sCoins — npcs.yml
+#   Tudo relacionado ao sistema de NPCs do Top 3
+#   fica neste arquivo para melhor organização.
+#
+#   SEÇÃO "settings" → configure aqui
+#   SEÇÃO "npcs"     → gerada automaticamente pelo plugin
+#                      NÃO edite manualmente
+#   Use /coins npc set <1|2|3> para posicionar
+#   Use /coins npc remove <1|2|3> para remover
+#   Use /coins npc reload para forçar atualização
+# ================================================
+
+# ================================
+#         Configurações Gerais
+# ================================
+settings:
+  # Ativa ou desativa o sistema inteiro de NPCs
+  enabled: true
+
+  # Altura extra do hologram acima da cabeça do NPC (em blocos)
+  hologram-height: 2.3
+
+  # Espaçamento entre cada linha do hologram (em blocos)
+  hologram-line-gap: 0.28
+
+  # Escala do texto do hologram
+  hologram-scale: 1.2
+
+  # Distância máxima (em blocos) em que o NPC olha para o jogador
+  look-range: 8.0
+
+# ================================
+#         Hologram — Top 1/2/3
+#   Placeholders disponíveis:
+#   {player}   → nome do jogador
+#   {coins}    → saldo formatado (ex: 1.5M)
+#   {position} → número da posição (1, 2 ou 3)
+# ================================
+hologram:
+  top-1:
+    lines:
+      - "&a&lTOP 1"
+      - ""
+      - "&e{player}"
+      - "&7Coins: &2⛃&a{coins}"
+      - ""
+
+  top-2:
+    lines:
+      - "&a&lTOP 2"
+      - ""
+      - "&e{player}"
+      - "&7Coins: &2⛃&a{coins}"
+      - ""
+
+  top-3:
+    lines:
+      - "&a&lTOP 3"
+      - ""
+      - "&e{player}"
+      - "&7Coins: &2⛃&a{coins}"
+      - ""
+
+  # Hologram exibido quando não há jogador nessa posição
+  empty:
+    lines:
+      - "&7&lTOP {position}"
+      - "&7Aguardando jogador..."
+
+# ================================
+#   SEÇÃO GERADA AUTOMATICAMENTE
+#   Dados dos NPCs ativos no servidor
+#   NÃO edite manualmente
+# ================================
+npcs: {}

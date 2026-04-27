@@ -1,0 +1,318 @@
+# ================================================
+#   sCoins — menus.yml
+#   Toda a configuração visual dos menus fica aqui.
+#
+#   Use & para cores  |  {placeholder} para valores
+#   Slots são 0-based (slot 0 = primeira posição)
+# ================================================
+
+# ================================
+#        Menu Principal (/coins)
+# ================================
+main-menu:
+  title: "&8Menu de Coins"
+  size: 27
+
+  player-head:
+    slot: 10
+    name: "&a&lSUAS INFORMAÇÕES"
+    lore:
+      - "&7Veja suas informações"
+      - "&7referente aos seus coins."
+      - ""
+      - " &fSaldo atual: &a{coins}&f."
+      - " &fTransações realizadas: &b{transacoes}"
+      - " &fRecebimento de coins: {toggle}"
+      - ""
+      - "&eClique para ativar/desativar o"
+      - "&erecebimento de coins."
+    toggle-on: "&aON"
+    toggle-off: "&cOFF"
+
+  history-button:
+    slot: 12
+    material: PLAYER_HEAD
+    skull-texture: "http://textures.minecraft.net/texture/c865ee9c7087690ddc20654fe6ac3f60e3276fdc37883502c533e7b9ccb64b3d"
+    name: "&e&lHISTÓRICO DE TRANSAÇÕES"
+    lore:
+      - "&7Veja seu histórico de"
+      - "&7transações realizadas."
+      - ""
+      - "&aClique para visualizar."
+
+  top-button:
+    slot: 14
+    material: PLAYER_HEAD
+    skull-texture: "http://textures.minecraft.net/texture/209299a117bee88d3262f6ab98211fba344ecae39b47ec848129706dedc81e4f"
+    name: "&a&lTOP JOGADORES"
+    lore:
+      - "&7Veja os jogadores que"
+      - "&7se destacam sendo os"
+      - "&7mais ricos do servidor."
+      - ""
+      - "&aClique para visualizar."
+
+  magnata-button:
+    slot: 16
+    name: "&a&lMAGNATA"
+    lore:
+      - ""
+      - " &fMagnata atual: &6{magnata}"
+      - " &fSaldo do magnata: &a{saldo} coins"
+      - ""
+    no-magnata: "&cNenhum jogador ainda."
+
+  magnata-empty:
+    material: PLAYER_HEAD
+    skull-texture: "http://textures.minecraft.net/texture/beb588b21a6f98ad1ff4e085c552dcb050efc9cab427f46048f18fc803475f7"
+    name: "&cSem Magnata"
+    lore:
+      - "&7Nenhum jogador possui"
+      - "&7coins no servidor ainda."
+      - ""
+      - "&eComece a ganhar coins"
+      - "&epara se tornar o magnata!"
+
+# ================================
+#         Menu — Histórico
+# ================================
+history-menu:
+  title: "&8Histórico de Transações"
+  size: 54
+
+  # Slot do botão voltar (slot 39)
+  back-slot: 39
+
+  # Slot do botão "Alterar Opção" → vai para o Extrato (slot 41)
+  toggle-slot: 41
+
+  # Slot onde aparece a cabeça de "sem transações"
+  empty-head-slot: 22
+
+  # Slots dos itens de histórico (0-based)
+  history-slots: [10,11,12,13,14,15,16,19,20,21,22,23,24,25]
+
+  back-button:
+    material: PLAYER_HEAD
+    skull-texture: "http://textures.minecraft.net/texture/bd69e06e5dadfd84e5f3d1c21063f2553b2fa945ee1d4d7152fdc5425bc12a9"
+    name: "&cVoltar"
+    lore:
+      - ""
+      - "&7Clique para voltar ao"
+      - "&7menu principal."
+
+  empty-slot:
+    material: PLAYER_HEAD
+    skull-texture: "http://textures.minecraft.net/texture/beb588b21a6f98ad1ff4e085c552dcb050efc9cab427f46048f18fc803475f7"
+    name: "&cNenhuma transação registrada"
+    lore:
+      - "&7Você ainda não realizou nenhuma"
+      - "&7transação no servidor."
+      - ""
+      - "&eEnvie ou receba coins para"
+      - "&ecomeçar seu histórico!"
+
+  # ── Tipos de transação ──────────────────────────────────────────
+  # Placeholders: {player}, {coins}, {data}
+  sent:
+    material: PAPER
+    name: "&c&lCOINS ENVIADOS"
+    lore:
+      - "&7Você enviou coins para outro jogador."
+      - ""
+      - " &fEnviado para: &e{player}"
+      - " &fValor: &2⛃&a {coins} coins"
+      - " &fData: &8[{data}]"
+      - ""
+
+  received:
+    material: PAPER
+    name: "&a&lCOINS RECEBIDOS"
+    lore:
+      - "&7Você recebeu coins de outro jogador."
+      - ""
+      - " &fRecebido de: &b{player}"
+      - " &fValor: &2⛃&a {coins} coins"
+      - " &fData: &8[{data}]"
+      - ""
+
+  admin-add:
+    material: PAPER
+    name: "&a&lCOINS ADICIONADOS"
+    lore:
+      - "&7Foi adicionado coins à sua conta."
+      - ""
+      - " &fRecebido de: &c&lADMINISTRADOR"
+      - " &fValor: &2⛃&a {coins} coins"
+      - " &fData: &8[{data}]"
+      - ""
+
+  admin-remove:
+    material: PAPER
+    name: "&c&lCOINS REMOVIDOS"
+    lore:
+      - "&7Coins foram removidos da sua conta."
+      - ""
+      - " &fRemovido por: &c&lADMINISTRADOR"
+      - " &fValor: &2⛃&a {coins} coins"
+      - " &fData: &8[{data}]"
+      - ""
+
+  reward:
+    material: PAPER
+    name: "&6&lRECOMPENSA POR TEMPO ONLINE"
+    lore:
+      - "&7Você ganhou coins por ficar online."
+      - ""
+      - " &fValor: &2⛃&a {coins} coins"
+      - " &fData: &8[{data}]"
+      - ""
+
+# ================================
+#         Menu — Top Jogadores
+# ================================
+top-menu:
+  title: "&8Top Jogadores"
+  size: 54
+
+  back-slot: 40
+
+  # Slot onde aparece a cabeça "sem jogadores"
+  no-players-slot: 22
+
+  # Slots dos top 10 jogadores (0-based)
+  player-slots: [10,11,12,13,14,15,16,21,22,23]
+
+  # ── Template dos itens de cada jogador no top ──────────────────────
+  # Placeholders: {medal} {player} {position} {coins}
+  player-item:
+    name: "{medal}&a{player}"
+    lore:
+      - ""
+      - " &fPosição: &e#{position}"
+      - " &fSaldo: &2⛃&a{coins}"
+      - ""
+
+  back-button:
+    material: PLAYER_HEAD
+    skull-texture: "http://textures.minecraft.net/texture/bd69e06e5dadfd84e5f3d1c21063f2553b2fa945ee1d4d7152fdc5425bc12a9"
+    name: "&cVoltar"
+    lore:
+      - ""
+      - "&7Clique para voltar ao"
+      - "&7menu principal."
+
+  no-players:
+    material: PLAYER_HEAD
+    skull-texture: "http://textures.minecraft.net/texture/beb588b21a6f98ad1ff4e085c552dcb050efc9cab427f46048f18fc803475f7"
+    name: "&cSem jogadores"
+    lore:
+      - "&7Nenhum jogador possui"
+      - "&7coins no servidor ainda."
+      - ""
+      - "&eComece a jogar para"
+      - "&eaparecer no ranking!"
+
+# ================================
+#      Menu — Extrato Econômico
+# ================================
+extrato-menu:
+  title: "&8Extrato Econômico"
+  size: 54
+
+  # Slots dos itens de estatística
+  saldo-slot:    10
+  enviado-slot:  12
+  recebido-slot: 14
+  reward-slot:   16
+
+  # Slot do botão voltar
+  back-slot: 39
+
+  # Slot do botão "Alterar Opção" → vai para o Histórico
+  toggle-slot: 41
+
+  # ── Saldo atual (cabeça do jogador) ────────────────────────────
+  saldo:
+    name: "&a&lSEU SALDO ATUAL"
+    lore:
+      - ""
+      - " &fSeu saldo disponível"
+      - " &fpara enviar e receber."
+      - ""
+      - "  &fSaldo Total: &2⛃&a{coins}"
+      - "  &fTotal Bruto: &2⛃&a{coins_raw}"
+      - ""
+
+  # ── Total enviado ───────────────────────────────────────────────
+  enviado:
+    material: PLAYER_HEAD
+    skull-texture: "http://textures.minecraft.net/texture/4e4b8b8d2362c864e062301487d94d3272a6b570afbf80c2c5b148c954579d46"
+    name: "&c&lCOINS ENVIADOS"
+    lore:
+      - ""
+      - " &fTotal de coins que você"
+      - " &ftransferiu para outros"
+      - " &fjogadores neste servidor."
+      - ""
+      - "  &fTotal enviado: &2⛃&a{coins}"
+      - "  &fTotal Bruto: &2⛃&a{coins_raw}"
+      - ""
+      - ""
+
+  # ── Total recebido ──────────────────────────────────────────────
+  recebido:
+    material: PLAYER_HEAD
+    skull-texture: "http://textures.minecraft.net/texture/5ff31431d64587ff6ef98c0675810681f8c13bf96f51d9cb07ed7852b2ffd1"
+    name: "&a&lCOINS RECEBIDOS"
+    lore:
+      - ""
+      - " &fTotal de coins que você"
+      - " &frecebeu de outros jogadores"
+      - " &fe de administradores."
+      - ""
+      - "  &fTotal recebido: &2⛃&a{coins}"
+      - "  &fTotal Bruto: &2⛃&a{coins_raw}"
+      - ""
+
+  # ── Total de rewards ────────────────────────────────────────────
+  reward:
+    material: PLAYER_HEAD
+    skull-texture: "http://textures.minecraft.net/texture/5d308ae27b58b69645497f9da86597eda947eacd10c29e3d4bbf3bc76ceb1eab"
+    name: "&6&lREWARDS RECEBIDOS"
+    lore:
+      - ""
+      - " &fTotal de coins recebidos"
+      - " &fautomaticamente por ficar"
+      - " &fonline no servidor."
+      - ""
+      - " &f⛃ Total em rewards: &6{coins}"
+      - ""
+      - " &8( &7Bruto: &f{coins_raw} &8)"
+      - ""
+
+  # ── Botão voltar ────────────────────────────────────────────────
+  back-button:
+    material: PLAYER_HEAD
+    skull-texture: "http://textures.minecraft.net/texture/bd69e06e5dadfd84e5f3d1c21063f2553b2fa945ee1d4d7152fdc5425bc12a9"
+    name: "&cVoltar"
+    lore:
+      - ""
+      - "&7Clique para voltar ao"
+      - "&7menu principal."
+
+  # ── Botão alternar opção ────────────────────────────────────────
+  toggle-button:
+    skull-texture: "http://textures.minecraft.net/texture/a92e31ffb59c90ab08fc9dc1fe26802035a3a47c42fee63423bcdb4262ecb9b6"
+    name: "&eAlterar Opção"
+    # Placeholders: {historico} e {extrato} são substituídos com a opção ativa marcada
+    historico-label: "&7Histórico"
+    extrato-label: "&7Extrato"
+    lore:
+      - ""
+      - " &8&l┏ {historico}"
+      - " &8&l┗ {extrato}"
+      - ""
+      - "&7Clique para alternar!"
+      - ""
+

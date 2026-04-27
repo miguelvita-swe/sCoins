@@ -1,0 +1,75 @@
+name: sCoins
+version: 1.0.0
+main: com.skyy.coins.Main
+api-version: 1.21
+softdepend: [PlaceholderAPI, Citizens]
+
+commands:
+  coins:
+    description: Gerencia coins dos jogadores
+    usage: /coins [subcomando] [jogador] [valor]
+    aliases: [sc]
+
+permissions:
+  scoins.*:
+    description: Acesso total ao sCoins
+    default: op
+    children:
+      scoins.admin: true
+      scoins.use: true
+
+  scoins.admin:
+    description: Acesso aos comandos administrativos
+    default: op
+    children:
+      scoins.admin.add: true
+      scoins.admin.remove: true
+      scoins.admin.set: true
+      scoins.admin.reload: true
+      scoins.admin.formatar: true
+      scoins.admin.npc: true
+      scoins.admin.db: true
+
+  scoins.admin.add:
+    description: Permite usar /coins add
+    default: op
+  scoins.admin.remove:
+    description: Permite usar /coins remove
+    default: op
+  scoins.admin.set:
+    description: Permite usar /coins set
+    default: op
+  scoins.admin.reload:
+    description: Permite usar /coins reload
+    default: op
+  scoins.admin.formatar:
+    description: Permite usar /coins formatar
+    default: op
+  scoins.admin.npc:
+    description: Permite usar /coins npc
+    default: op
+  scoins.admin.db:
+    description: Permite usar /coins db status
+    default: op
+
+  scoins.use:
+    description: Acesso aos comandos básicos
+    default: true
+    children:
+      scoins.use.enviar: true
+      scoins.use.historico: true
+      scoins.use.toggle: true
+      scoins.use.top: true
+
+  scoins.use.enviar:
+    description: Permite usar /coins enviar
+    default: true
+  scoins.use.historico:
+    description: Permite usar /coins historico
+    default: true
+  scoins.use.toggle:
+    description: Permite usar /coins toggle
+    default: true
+  scoins.use.top:
+    description: Permite usar /coins top
+    default: true
