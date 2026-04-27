@@ -115,7 +115,7 @@ public class Main extends JavaPlugin {
         // ── Integrações com soft-depends ────────────────────────────────
         // PlaceholderAPI
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            new SCoinsExpansion(coinsManager, rankManager, fileStorage).register();
+            new SCoinsExpansion(coinsManager, rankManager, fileStorage, getConfig()).register();
             getLogger().info("[sCoins] PlaceholderAPI detectado → placeholders %scoins_*% registrados.");
         } else {
             getLogger().info("[sCoins] PlaceholderAPI não encontrado → placeholders desativados (opcional).");
@@ -139,8 +139,8 @@ public class Main extends JavaPlugin {
             getLogger().info("[sCoins] Adicione %scoins_chat_prefix% no formato de mensagem do " + chatPlugin + " para exibir medalhas.");
         } else {
             // Nenhum plugin de chat → usa o listener interno do sCoins
-            getServer().getPluginManager().registerEvents(new ChatPrefixListener(rankManager), this);
-            getLogger().info("[sCoins] Nenhum plugin de chat detectado → prefixo de medalha ativo via listener interno.");
+            getServer().getPluginManager().registerEvents(new ChatPrefixListener(fileStorage, getConfig()), this);
+            getLogger().info("[sCoins] Nenhum plugin de chat detectado → tag {magnata} ativa no chat.");
         }
 
         PluginCommand coinsCmd = getCommand("coins");

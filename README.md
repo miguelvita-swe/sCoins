@@ -100,17 +100,27 @@ database:
 
 | Placeholder | Retorno |
 |---|---|
-| `%scoins_coins%` | Saldo do jogador formatado |
-| `%scoins_coins_raw%` | Saldo bruto do jogador |
-| `%scoins_rank%` | Posição no ranking |
-| `%scoins_medal%` | Medalha do top 3 (🥇🥈🥉) |
-| `%scoins_chat_prefix%` | Prefixo de chat do rank |
-| `%scoins_top_name_[1-10]%` | Nome do jogador na posição X |
-| `%scoins_top_coins_[1-10]%` | Saldo formatado na posição X |
-| `%scoins_magnata%` | Nome do magnata atual |
-| `%scoins_magnata_coins%` | Saldo formatado do magnata |
-| `%scoins_magnata_raw%` | Saldo bruto do magnata |
-| `%scoins_is_magnata%` | `true` se o jogador é o magnata |
+| `%scoins_money%` | Saldo do jogador formatado (ex: `1.5M`) |
+| `%scoins_money_raw%` | Saldo bruto do jogador (ex: `1500000`) |
+| `%scoins_magnata%` | Tag configurável se o jogador for o magnata (ex: `[MAGNATA]`), vazio caso contrário |
+| `%scoins_top_pos%` | Posição do próprio jogador no TOP (ex: `3`) ou `-` |
+| `%scoins_top_player_[1-10]%` | Nome do jogador na posição X do ranking |
+| `%scoins_top_value_[1-10]%` | Saldo formatado do jogador na posição X |
+
+> A tag retornada por `%yeconomy_magnata%` é configurável no `config.yml` via a chave `magnata-tag`.
+
+---
+
+## 💬 Tag de Chat
+
+| Tag | Descrição |
+|---|---|
+| `{magnata}` | Substituída pela tag do magnata atual em qualquer mensagem de chat |
+
+**Exemplo:** o jogador digita `olá {magnata}` → aparece no chat como `olá &6&l[MAGNATA]`
+
+> Funciona automaticamente quando nenhum plugin de chat externo está presente.  
+> Com LegendChat / nChat / UltimateChat / NoxusChat: use `%yeconomy_magnata%` no formato do seu plugin.
 
 ---
 

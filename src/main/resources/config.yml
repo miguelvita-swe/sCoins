@@ -237,6 +237,10 @@ messages:
   # Novo Magnata — broadcast no chat para todos
   magnata-broadcast: "\n &a&lNOVO MAGNATA\n\n  &eO jogador &a{player} &eé o novo &a&lMAGNATA &edo servidor! \n  &eO novo magnata possui &8→ &a⛃{coins} &ecoins\n "
 
+  # Tag exibida pelo placeholder %yeconomy_magnata% e pela tag {magnata} no chat
+  # Aparece apenas para o jogador que for o magnata atual
+magnata-tag: "&6&l[MAGNATA]"
+
   # Title e Subtitle exibidos na tela de todos ao surgir novo magnata
   # {player} e {coins} disponíveis em ambos
   magnata-title: "&a{player}"
