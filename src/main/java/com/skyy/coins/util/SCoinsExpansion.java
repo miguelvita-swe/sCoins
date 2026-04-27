@@ -11,13 +11,17 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Placeholders disponíveis para uso com PlaceholderAPI:
  *
- * %scoins_coins%          → saldo formatado do jogador  (ex: 1.5M)
- * %scoins_coins_raw%      → saldo bruto do jogador      (ex: 1500000)
- * %scoins_rank%           → posição no ranking          (ex: 1) ou "-" se não rankear
- * %scoins_medal%          → medalha do top 3            (🥇 / 🥈 / 🥉 / "")
- * %scoins_chat_prefix%    → prefixo de chat do rank     (igual à medalha + espaço)
- * %scoins_top_name_[1-10] → nome do jogador na posição X do ranking
- * %scoins_top_coins_[1-10]→ saldo formatado do jogador na posição X
+ * %scoins_coins%           → saldo formatado do jogador  (ex: 1.5M)
+ * %scoins_coins_raw%       → saldo bruto do jogador      (ex: 1500000)
+ * %scoins_rank%            → posição no ranking          (ex: 1) ou "-" se não rankear
+ * %scoins_medal%           → medalha do top 3            (🥇 / 🥈 / 🥉 / "")
+ * %scoins_chat_prefix%     → prefixo de chat do rank     (igual à medalha + espaço)
+ * %scoins_top_name_[1-10]  → nome do jogador na posição X do ranking
+ * %scoins_top_coins_[1-10] → saldo formatado do jogador na posição X
+ * %scoins_magnata%         → nome do magnata atual       (ex: Steve)
+ * %scoins_magnata_coins%   → saldo formatado do magnata  (ex: 2.5M)
+ * %scoins_magnata_raw%     → saldo bruto do magnata      (ex: 2500000)
+ * %scoins_is_magnata%      → "true" se o jogador é o magnata, "false" caso contrário
  */
 public class SCoinsExpansion extends PlaceholderExpansion {
 
@@ -79,6 +83,22 @@ public class SCoinsExpansion extends PlaceholderExpansion {
                 String[] entry  = top.get(position);
                 return isName ? entry[0] : CoinsFormatter.format(Long.parseLong(entry[1]));
             } catch (NumberFormatException ignored) {}
+        }
+
+        // ── Placeholders do magnata ──────────────────────────────────────
+        if (params.startsWith("magnata")) {
+            String[] magnata = fileStorage.getMagnata(); // usa cache — sem query DB
+            switch (params) {
+                case "magnata":
+                    return magnata != null ? magnata[0] : "-";
+                case "magnata_coins":
+                    return magnata != null ? CoinsFormatter.format(Long.parseLong(magnata[1])) : "0";
+                case "magnata_raw":
+                    return magnata != null ? magnata[1] : "0";
+                case "is_magnata":
+                    if (player == null) return "false";
+                    return magnata != null && magnata[0].equals(player.getName()) ? "true" : "false";
+            }
         }
 
         return null; // placeholder não reconhecido

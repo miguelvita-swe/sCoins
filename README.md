@@ -101,10 +101,16 @@ database:
 | Placeholder | Retorno |
 |---|---|
 | `%scoins_coins%` | Saldo do jogador formatado |
+| `%scoins_coins_raw%` | Saldo bruto do jogador |
 | `%scoins_rank%` | Posição no ranking |
+| `%scoins_medal%` | Medalha do top 3 (🥇🥈🥉) |
+| `%scoins_chat_prefix%` | Prefixo de chat do rank |
+| `%scoins_top_name_[1-10]%` | Nome do jogador na posição X |
+| `%scoins_top_coins_[1-10]%` | Saldo formatado na posição X |
 | `%scoins_magnata%` | Nome do magnata atual |
-| `%scoins_top_1_name%` | Nome do 1º lugar |
-| `%scoins_top_1_coins%` | Coins do 1º lugar |
+| `%scoins_magnata_coins%` | Saldo formatado do magnata |
+| `%scoins_magnata_raw%` | Saldo bruto do magnata |
+| `%scoins_is_magnata%` | `true` se o jogador é o magnata |
 
 ---
 
