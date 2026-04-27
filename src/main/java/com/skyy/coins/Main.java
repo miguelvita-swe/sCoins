@@ -4,7 +4,9 @@ import com.skyy.coins.api.SCoinsAPIImpl;
 import com.skyy.coins.api.SCoinsProvider;
 import com.skyy.coins.commands.CoinsCommand;
 import com.skyy.coins.commands.CoinsTabCompleter;
+import com.skyy.coins.listener.ChatPrefixListener;
 import com.skyy.coins.listener.PlayerListener;
+import com.skyy.coins.util.ChatIntegration;
 import com.skyy.coins.manager.*;
 import com.skyy.coins.menu.ExtratoMenu;
 import com.skyy.coins.menu.ExtratoMenuListener;
@@ -110,9 +112,35 @@ public class Main extends JavaPlugin {
         SCoinsProvider.register(new SCoinsAPIImpl(coinsManager, transactionManager, toggleManager, fileStorage, rankManager));
         getLogger().info("sCoins API registrada — SCoinsProvider.get() disponível.");
 
+        // ── Integrações com soft-depends ────────────────────────────────
+        // PlaceholderAPI
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new SCoinsExpansion(coinsManager, rankManager, fileStorage).register();
-            getLogger().info("PlaceholderAPI detectado — placeholders %scoins_*% registrados.");
+            getLogger().info("[sCoins] PlaceholderAPI detectado → placeholders %scoins_*% registrados.");
+        } else {
+            getLogger().info("[sCoins] PlaceholderAPI não encontrado → placeholders desativados (opcional).");
+        }
+
+        // Citizens (NPCs) — já gerenciado pelo NpcManager acima com isCitizensAvailable()
+        if (getServer().getPluginManager().getPlugin("Citizens") == null) {
+            getLogger().info("[sCoins] Citizens não encontrado → sistema de NPCs desativado (opcional).");
+        }
+
+        // HolographicDisplays — não utilizado; o plugin usa TextDisplay nativo do Paper 1.19.4+
+        if (getServer().getPluginManager().getPlugin("HolographicDisplays") != null) {
+            getLogger().info("[sCoins] HolographicDisplays detectado → holograms usam TextDisplay nativo (sem conflito).");
+        }
+
+        // Chat plugins — prefixo de medalha no chat
+        String chatPlugin = ChatIntegration.getDetectedPlugin();
+        if (chatPlugin != null) {
+            getLogger().info("[sCoins] Plugin de chat detectado: " + chatPlugin
+                    + " → listener interno desativado.");
+            getLogger().info("[sCoins] Adicione %scoins_chat_prefix% no formato de mensagem do " + chatPlugin + " para exibir medalhas.");
+        } else {
+            // Nenhum plugin de chat → usa o listener interno do sCoins
+            getServer().getPluginManager().registerEvents(new ChatPrefixListener(rankManager), this);
+            getLogger().info("[sCoins] Nenhum plugin de chat detectado → prefixo de medalha ativo via listener interno.");
         }
 
         PluginCommand coinsCmd = getCommand("coins");

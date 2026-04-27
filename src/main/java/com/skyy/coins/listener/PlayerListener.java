@@ -6,9 +6,6 @@ import com.skyy.coins.manager.RankManager;
 import com.skyy.coins.manager.ToggleManager;
 import com.skyy.coins.manager.TransactionManager;
 import com.skyy.coins.storage.FileStorage;
-import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -127,16 +124,6 @@ public class PlayerListener implements Listener {
                 // Remove o registro de geração após save bem-sucedido para não vazar memória
                 saveGeneration.remove(uuid);
             });
-        }
-    }
-
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onChat(AsyncChatEvent event) {
-        String prefix = rankManager.getChatPrefix(event.getPlayer().getName());
-        if (!prefix.isEmpty()) {
-            Component prefixComp = LegacyComponentSerializer.legacySection().deserialize(prefix);
-            Component newMsg = prefixComp.append(event.message());
-            event.message(newMsg);
         }
     }
 }

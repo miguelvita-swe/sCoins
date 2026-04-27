@@ -2,7 +2,7 @@ name: sCoins
 version: 1.0.0
 main: com.skyy.coins.Main
 api-version: 1.21
-softdepend: [PlaceholderAPI, Citizens]
+softdepend: [PlaceholderAPI, Citizens, HolographicDisplays, LegendChat, nChat, UltimateChat, NoxusChat]
 
 commands:
   coins:
