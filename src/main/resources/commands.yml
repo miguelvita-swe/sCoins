@@ -1,0 +1,34 @@
+#     ___                                          _
+#    / __\___  _ __ ___  _ __ ___   __ _ _ __   __| |___
+#   / /  / _ \| '_ ` _ \| '_ ` _ \ / _` | '_ \ / _` / __|
+#  / /__| (_) | | | | | | | | | | | (_` | | | | (_| \__ \
+#  \____/\___/|_| |_| |_|_| |_| |_|\__,_|_| |_|\__,_|___/
+#
+# Lista de comandos do plugin sCoins.
+#
+# Utilize "comando|alias1|alias2" para criar aliases.
+# Você pode criar quantas aliases quiser.
+# O primeiro nome é o principal; os demais são aliases.
+#
+# Exemplo: "gm|gamemode" → /gm e /gamemode fazem o mesmo.
+#
+# ⚠ Requer reinicialização do servidor para aplicar alterações.
+
+commands:
+  # Comando principal: abre o menu/saldo de coins.
+  # Equivalente ao /coins sem argumentos.
+  money: 'money|coin|coins|balanço|balanco|balance'
+
+  # Comando de top jogadores mais ricos.
+  # Equivalente ao /coins top.
+  rich: 'rich|rico|magnata'
+
+  # Comando para enviar coins a outro jogador.
+  # Uso: /pay <jogador> <valor>
+  # Equivalente ao /coins enviar <jogador> <valor>.
+  pay: 'pay|pagar|enviar'
+
+  # Comando para emitir cheques de coins.
+  # Uso: /check <valor>
+  # Equivalente ao /coins cheque <valor>.
+  check: 'check|cheque|cheques'

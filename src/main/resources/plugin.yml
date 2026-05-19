@@ -1,8 +1,9 @@
 name: sCoins
 version: 1.0.0
-main: com.skyy.coins.Main
-api-version: 1.21
-softdepend: [PlaceholderAPI, Citizens, HolographicDisplays, LegendChat, nChat, UltimateChat, NoxusChat]
+main: br.com.skyy.coins.Main
+api-version: 1.13
+depend: [sCore]
+softdepend: [Vault, PlaceholderAPI, Citizens, HolographicDisplays, LegendChat, nChat, UltimateChat, NoxusChat]
 
 commands:
   coins:
@@ -60,6 +61,7 @@ permissions:
       scoins.use.historico: true
       scoins.use.toggle: true
       scoins.use.top: true
+      scoins.use.cheque: true
 
   scoins.use.enviar:
     description: Permite usar /coins enviar
@@ -72,4 +74,7 @@ permissions:
     default: true
   scoins.use.top:
     description: Permite usar /coins top
+    default: true
+  scoins.use.cheque:
+    description: Permite usar /coins cheque
     default: true

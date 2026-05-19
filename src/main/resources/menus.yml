@@ -29,13 +29,13 @@ main-menu:
     toggle-on: "&aON"
     toggle-off: "&cOFF"
 
-  history-button:
+  extrato-button:
     slot: 12
     material: PLAYER_HEAD
     skull-texture: "http://textures.minecraft.net/texture/c865ee9c7087690ddc20654fe6ac3f60e3276fdc37883502c533e7b9ccb64b3d"
-    name: "&e&lHISTÓRICO DE TRANSAÇÕES"
+    name: "&e&lEXTRATO"
     lore:
-      - "&7Veja seu histórico de"
+      - "&7Veja seu extrato de"
       - "&7transações realizadas."
       - ""
       - "&aClique para visualizar."
@@ -257,7 +257,6 @@ extrato-menu:
       - ""
       - "  &fTotal enviado: &2⛃&a{coins}"
       - "  &fTotal Bruto: &2⛃&a{coins_raw}"
-      - ""
       - ""
 
   # ── Total recebido ──────────────────────────────────────────────

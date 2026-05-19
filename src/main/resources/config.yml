@@ -1,30 +1,109 @@
-# ================================
-#        sCoins - Configuração
-# ================================
+#
+#   ___  ____      _
+#  / __|/ ___| ___(_)_ __  ___
+#  \__ \ |    / _ \ | '_ \/ __|
+#  |___/ |___|  __/ | | | \__ \
+#       \____|\___|_|_| |_|___/
+#
+# sCoins — Plugin de Economia para Minecraft
+# Suporte: github.com/miguelvita-swe/sCoins
+#
+
+# Modo de depuração — ativa logs extras no console para correção de problemas.
+# Desative em produção para não poluir o console.
+debug-mode: false
 
 # ================================
 #         Banco de Dados
-# storage-type: "yaml" (padrão, sem necessidade de MySQL)
-#               "mysql" (recomendado para servidores com 50+ jogadores)
+#
+# storage-type: Determina o tipo de armazenamento.
+#   Valores válidos: [yaml, mysql]
+#   yaml  = padrão, sem necessidade de servidor externo
+#   mysql = recomendado para servidores com 50+ jogadores (usa HikariCP)
 # ================================
 storage-type: "yaml"
 
 database:
+  # Endereço de conexão do banco de dados. [EX: 127.0.0.1]
   host: "localhost"
+  # Porta de conexão do banco de dados. [EX: 3306]
   port: 3306
+  # Nome do banco de dados a ser conectado. [EX: scoins]
   name: "scoins"
+  # Usuário de conexão. [EX: root]
   username: "root"
+  # Senha do usuário de conexão. [EX: 123]
   password: ""
-  # Prefixo das tabelas (útil se o banco é compartilhado com outros plugins)
+  # Prefixo das tabelas — útil se o banco é compartilhado com outros plugins
   table-prefix: "scoins_"
   # Pool de conexões HikariCP
   pool-size: 10
-  connection-timeout: 30000
+  connection-timeout: 5000
   idle-timeout: 600000
   max-lifetime: 1800000
+  leak-detection-threshold: 10000
 
-# Coins que o jogador recebe ao entrar pela primeira vez
-starting-coins: 0
+# ================================
+#         Redis
+# Usado para sincronização entre servidores BungeeCord/Velocity.
+# Deixe enabled: false se não usar rede multi-servidor.
+# ================================
+redis:
+  # Ativar a conexão com o Redis
+  enabled: false
+  # Endereço de conexão. [EX: 127.0.0.1]
+  host: "localhost"
+  # Porta de conexão. [EX: 6379]
+  port: 6379
+  # Usuário de conexão (deixe vazio se não usar autenticação)
+  username: ""
+  # Senha do usuário de conexão (deixe vazio se não usar autenticação)
+  password: ""
+  # Prefixo dos canais Redis — para diferenciar de outros plugins
+  prefix: "scoins:"
+
+# ================================
+#          Configurações Gerais
+# ================================
+general:
+  # Ativar transações com jogadores não conectados
+  # false = só permite envio de coins para jogadores online
+  offline-transactions: true
+
+  # Ao digitar /coins sem argumentos:
+  #   true  = abre o menu principal
+  #   false = exibe o saldo no chat
+  money-menu: true
+
+  # Ao digitar /coins top:
+  #   true  = abre o menu de top jogadores
+  #   false = exibe o top no chat
+  top-menu: true
+
+  # Tempo em segundos para atualizar o cache do ranking de top jogadores
+  # Valores menores = mais atualizado, mais processamento. Recomendado: 60–600
+  top-delay: 600
+
+  # Tag exibida no chat para o jogador mais rico do servidor
+  # Usada pelo {magnata} no top-chat.rich-format abaixo
+  top-tag: "&6&l[$]"
+
+# ================================
+#       Preferências de Coins
+# ================================
+coin-preferences:
+  # Quantia de coins que o jogador recebe ao entrar pela primeira vez
+  initial-amount: 0
+
+  # Nome do coin no singular (ex: "1 coin")
+  singular-format: "coin"
+
+  # Nome do coin no plural (ex: "10 coins")
+  plural-format: "coins"
+
+# ================================
+#         Coins — Limites e Regras
+# ================================
 
 # Limite máximo de coins que um jogador pode ter
 max-coins: 2000000000
@@ -61,6 +140,90 @@ history-max-entries: 10
 
 # Intervalo em minutos para salvar automaticamente os dados de todos os jogadores
 auto-save-interval: 5
+
+# ================================
+#      Top Jogadores — Formato no Chat
+# Exibido quando general.top-menu: false e o jogador digitar /coins top
+# Placeholders disponíveis:
+#   {pos}     → posição no ranking (1, 2, 3...)
+#   {player}  → nome do jogador
+#   {coins}   → saldo formatado do jogador
+#   {magnata} → tag do magnata (top-tag acima), vazio se não for o magnata
+#   {prefixo} → prefixo do LuckPerms via PlaceholderAPI (requer PAPI instalado)
+#   {tags}    → {magnata} + {prefixo} combinados
+# ================================
+top-chat:
+  # Tag do magnata — o plugin remove automaticamente se for apenas espaços
+  rich-format: "{magnata} "
+
+  # Prefixo do LuckPerms — o plugin remove automaticamente se for apenas espaços
+  # Requer PlaceholderAPI instalado para funcionar
+  prefix-format: "%luckperms_prefix% "
+
+  # Combinação das tags acima — usada em {tags} no player-format
+  tags: "{magnata}{prefixo}"
+
+  # Formato de cada linha do ranking no chat
+  player-format: "  &f{pos}º {tags}&7{player} &8→ &2⛃&a{coins} &ecoins"
+
+  # Mensagem completa do TOP exibida no chat
+  # {formato} = linhas geradas com player-format acima
+  # {delay}   = valor de general.top-delay
+  message: "\n &6&lTOP COINS &7(Atualizado a cada {delay}s)\n\n{formato}\n "
+
+# ================================
+#         Sistema de Cheques
+# Permite converter coins em cheques (itens) que podem ser trocados entre jogadores.
+# Use /coins cheque <valor> para emitir um cheque.
+# Clique com botão direito no cheque para resgatar os coins.
+# ================================
+checks:
+  # Cheque principal — emitido pelo /coins cheque <valor>
+  main-check:
+    material: PAPER
+    # Deixar o item brilhando (efeito encantamento)
+    glow: true
+    name: "&aCheque de Coins"
+    lore:
+      - ""
+      - "&7Emitido por: &a{player}&7."
+      - "&7Emitido em: &f{data} &8— &f{hora}&7."
+      - ""
+      - "&6Valor do cheque: &2⛃&a{coins}&6."
+      - ""
+      - "&7Clique com &fbotão direito &7para resgatar."
+
+  # Cheque de mídia — emitido programaticamente via API
+  media-check:
+    material: PAPER
+    glow: true
+    name: "&aCheque de Coins"
+    lore:
+      - ""
+      - "&6Valor do cheque: &2⛃&a{coins}&6."
+      - ""
+      - "&7Clique com &fbotão direito &7para resgatar."
+
+  # Cheque de morte — dropado quando um jogador morre (se habilitado)
+  death-check:
+    # Ativar ou desativar a perda de coins ao morrer
+    enabled: false
+    # Máximo de coins que o morto pode perder (teto absoluto em coins)
+    maximum: 20000.0
+    # Porcentagem do saldo do jogador que será perdida ao morrer
+    percentage: 10.0
+    item:
+      material: PAPER
+      glow: true
+      name: "&aCheque de Coins"
+      lore:
+        - ""
+        - "&7Dropado por: &c{player}&7."
+        - "&7Perdido em: &f{data} &8— &f{hora}&7."
+        - ""
+        - "&6Valor do cheque: &2⛃&a{coins}&6."
+        - ""
+        - "&7Clique com &fbotão direito &7para resgatar."
 
 # ================================
 #         Sons
@@ -142,6 +305,18 @@ sounds:
     volume: 1.0
     pitch: 1.0
 
+  # Emitir um cheque com /coins cheque
+  cheque-create:
+    sound: ENTITY_EXPERIENCE_ORB_PICKUP
+    volume: 0.8
+    pitch: 1.6
+
+  # Resgatar um cheque (clique direito)
+  cheque-redeem:
+    sound: ENTITY_PLAYER_LEVELUP
+    volume: 0.8
+    pitch: 1.4
+
 # ================================
 #         Formatação de Coins
 # Use /coins formatar <valor> <sufixo> para adicionar em tempo real
@@ -211,10 +386,21 @@ messages:
   transfer-success-sender: "&6&lCOINS &eVocê enviou &2⛃&a{coins}&e coins para &a{player}&e."
   transfer-success-target: "&6&lCOINS &eVocê recebeu &2⛃&a{coins}&e coins de &e{player}&e."
   transfer-blocked-toggle: "&c&lCOINS &c{player} não está aceitando coins no momento."
+  # Exibido quando general.offline-transactions: false e o alvo estiver offline
+  transfer-offline-disabled: "&c&lCOINS &cTransações com jogadores offline estão desativadas."
 
   # /coins toggle
   toggle-on: "&6&lCOINS &aVocê ativou o recebimento de coins."
   toggle-off: "&6&lCOINS &cVocê desativou o recebimento de coins."
+
+  # /coins cheque <valor>
+  cheque-success: "&6&lCOINS &eVocê emitiu um cheque de &2⛃&a{coins}&e coins."
+  cheque-no-balance: "&c&lCOINS &cVocê não possui coins suficientes para emitir esse cheque."
+  cheque-invalid-value: "&c&lCOINS &cValor inválido para o cheque. Use apenas números positivos."
+  cheque-min: "&c&lCOINS &cO valor mínimo para emitir um cheque é &e{min} coins&c."
+  cheque-redeemed: "&6&lCOINS &eVocê resgatou &2⛃&a{coins}&e coins do cheque!"
+  cheque-redeemed-max: "&c&lCOINS &cVocê atingiu o limite máximo de coins ao tentar resgatar o cheque."
+  cheque-death-lost: "&c&lCOINS &cVocê perdeu &2⛃&a{coins}&e coins ao morrer!"
 
   # /coins formatar
   formatar-usage: "\n &6&lCOINS &8— &eFormatação de Coins\n\n  &7Comandos:\n   &6/coins formatar &8— &eListar todos os formatos ativos\n   &6/coins formatar <número> <sufixo> &8— &eAdicionar um novo formato\n   &6/coins formatar <número> remover &8— &eRemover um formato\n"
@@ -222,12 +408,12 @@ messages:
   formatar-removed: "&6&lCOINS &eFormato para &a{valor}&e removido com sucesso."
   formatar-not-found: "&c&lCOINS &cNenhum formato encontrado para &e{valor}&c."
   formatar-invalid-value: "&c&lCOINS &cValor inválido. Use apenas números inteiros positivos."
-  formatar-list-header: "&7&7&7Formatos configurados:"
+  formatar-list-header: "&7Formatos configurados:"
   formatar-list-entry: "   &7• &e{valor} &7→ &a{sufixo}"
-  formatar-list-empty: " &c&lCOINS &cNenhum formato definido."
+  formatar-list-empty: "&c&lCOINS &cNenhum formato definido."
 
   # Ajuda
-  help: "\n&6&lCOINS\n\n &6/coins &7— &eVer o seu saldo\n &6/coins <jogador> &7— &eVer o saldo de outro jogador\n &6/coins enviar <jogador> <valor> &7— &eEnviar coins\n &6/coins extrato &7— &eVer seu extrato de transações\n &6/coins top &7— &eVer o ranking de coins\n &6/coins toggle &7— &eAtivar/desativar recebimento de coins\n &6/coins add <jogador> <valor> &7— &eAdicionar coins &7[admin]\n &6/coins remove <jogador> <valor> &7— &eRemover coins &7[admin]\n &6/coins setar <jogador> <valor> &7— &eDefinir saldo exato &7[admin]\n &6/coins formatar <valor> <sufixo> &7— &eDefinir formatação &7[admin]\n &6/coins reload &7— &eRecarregar o config.yml &7[admin]\n &6/coins db status &7— &eVer status do banco de dados &7[admin]\n &6/coins npc set <1|2|3> &7— &ePositionar NPC do top &7[admin]\n &6/coins npc remove <1|2|3> &7— &eRemover NPC do top &7[admin]\n &6/coins npc reload &7— &eAtualizar skins e holograms &7[admin]\n&7"
+  help: "\n&6&lCOINS\n\n &6/coins &7— &eVer o seu saldo\n &6/coins <jogador> &7— &eVer o saldo de outro jogador\n &6/coins enviar <jogador> <valor> &7— &eEnviar coins\n &6/coins cheque <valor> &7— &eEmitir um cheque de coins\n &6/coins extrato &7— &eVer seu extrato de transações\n &6/coins top &7— &eVer o ranking de coins\n &6/coins toggle &7— &eAtivar/desativar recebimento de coins\n &6/coins add <jogador> <valor> &7— &eAdicionar coins &7[admin]\n &6/coins remove <jogador> <valor> &7— &eRemover coins &7[admin]\n &6/coins setar <jogador> <valor> &7— &eDefinir saldo exato &7[admin]\n &6/coins formatar <valor> <sufixo> &7— &eDefinir formatação &7[admin]\n &6/coins reload &7— &eRecarregar o config.yml &7[admin]\n &6/coins db status &7— &eVer status do banco de dados &7[admin]\n &6/coins npc set <1|2|3> &7— &ePositionar NPC do top &7[admin]\n &6/coins npc remove <1|2|3> &7— &eRemover NPC do top &7[admin]\n &6/coins npc reload &7— &eAtualizar skins e holograms &7[admin]\n&7"
 
   # Recompensa por tempo online
   reward-chat: "&6&lCOINS &eVocê ganhou &2⛃&a{coins}&e coins por jogar!"
@@ -235,11 +421,11 @@ messages:
   reward-max-reached: "&6&lCOINS &eVocê atingiu o limite máximo de coins &2⛃&a{max}&e!"
 
   # Novo Magnata — broadcast no chat para todos
-  magnata-broadcast: "\n &a&lNOVO MAGNATA\n\n  &eO jogador &a{player} &eé o novo &a&lMAGNATA &edo servidor! \n  &eO novo magnata possui &8→ &a⛃{coins} &ecoins\n "
+  magnata-broadcast: "\n &a&lNOVO MAGNATA\n\n  &eO jogador &a{player} &eé o novo &a&lMAGNATA &edo servidor!\n  &eO novo magnata possui &8→ &2⛃&a{coins} &ecoins\n "
 
-  # Tag exibida pelo placeholder %yeconomy_magnata% e pela tag {magnata} no chat
+  # Tag exibida pelo placeholder %scoins_magnata% e pela tag {magnata} no chat
   # Aparece apenas para o jogador que for o magnata atual
-magnata-tag: "&6&l[MAGNATA]"
+  magnata-tag: "&6&l[MAGNATA]"
 
   # Title e Subtitle exibidos na tela de todos ao surgir novo magnata
   # {player} e {coins} disponíveis em ambos
