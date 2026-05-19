@@ -274,7 +274,7 @@ HashMap<String, Double> top = api.getTop();
 
 ## 👤 Autor
 
-**Skyy** — Suite de plugins "s" para Minecraft
+**Skyy**
 
 ---
 
