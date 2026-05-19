@@ -8,9 +8,7 @@
 
 | Plugin | Descrição |
 |--------|-----------|
-| [sCore](https://github.com/miguelvita-swe/sCore) | Núcleo — providers, API, database, menus |
 | **sCoins** | **Sistema de economia customizada com coins, ranking, NPCs e API** |
-| sMaquinas | Máquinas que geram drops ao consumir combustível *(em desenvolvimento)* |
 
 ---
 
